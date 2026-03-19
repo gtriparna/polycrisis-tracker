@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Polycrisis Cascade Tracker — March 2026</title>
+<meta name="description" content="How five simultaneous global crises interact and amplify each other — traced 10 layers deep. Live tracking of the energy, food, alliance, technology, and nuclear cascade chains.">
+<meta property="og:title" content="Global Polycrisis Cascade Tracker">
+<meta property="og:description" content="How five simultaneous crises interact and amplify each other — traced 10 layers deep.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚠️</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0A0A0B; color: #E5E5E5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #DC262666; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0A0A0B; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { animation: fadeIn 0.3s ease-out; }
+  .pulse { animation: pulse 2s ease-in-out infinite; }
+  a { color: #DC2626; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+const CHAINS = [
+  {
+    id: "economy",
+    title: "The Inflation Spiral",
+    subtitle: "Energy → Economy → Your Wallet",
+    icon: "💰",
+    color: "#DC2626",
+    status: "ACTIVE",
+    summary: "How $100+ oil becomes job losses, a trapped Federal Reserve, and a debt crisis that consumes America's fiscal future",
+    layers: [
+      { depth: 1, title: "Energy Infrastructure Destroyed", desc: "Israel strikes Iran's South Pars gas field (world's largest natural gas reserve). Iran retaliates on Qatar's Ras Laffan (processes 20% of global LNG). Strait of Hormuz closed since ~March 4. Total oil output cuts: 7–10 million barrels per day — 7–10% of global demand. Saudi, Bahraini, Kuwaiti, Iraqi refineries also attacked. This is the largest energy supply disruption in history.", status: "happened", date: "Feb 28 – Mar 18" },
+      { depth: 2, title: "Energy Prices Spike Beyond Flow-Disruption Levels", desc: "Brent crude breaks $108/barrel. European gas benchmarks surge 63% in one week — another 6% on Mar 18 alone. U.S. gasoline heading toward $4+/gallon. Critical distinction: this is no longer just a transit disruption (Hormuz closure, reversible). Infrastructure is physically destroyed — LNG liquefaction trains take months to years to repair. Prices don't normalize at ceasefire. They normalize when infrastructure is rebuilt.", status: "happening", date: "Mar 2026" },
+      { depth: 3, title: "Costs Cascade Through Every Supply Chain", desc: "Everything that moves by truck, ship, rail, or plane costs more. Diesel drives agriculture, logistics, and construction. Jet fuel drives air travel and air freight. Natural gas drives electricity in gas-dependent grids, industrial heating, and chemical manufacturing. Plastics, packaging, pharmaceuticals — all petroleum derivatives. The energy price isn't one price. It's the base layer under every other price in the economy.", status: "happening", date: "Mar–Apr 2026" },
+      { depth: 4, title: "The Federal Reserve Is Trapped in a Double Bind", desc: "February PPI came in at 0.7% — more than double the 0.3% expected — and that was BEFORE the full oil shock hit. Core PCE stuck at ~3%. The Fed needs to cut rates to support a weakening economy, but can't without risking inflation expectations unanchoring. Needs to hold or raise rates to fight inflation, but can't without crushing an economy that's already losing jobs. This is the textbook definition of policy paralysis. The Fed held rates steady on March 18.", status: "happening", date: "Mar 2026" },
+      { depth: 5, title: "Housing Stays Frozen, Construction Slows", desc: "No rate cuts → mortgage rates stay above 6.5% → the housing market stays locked. The housing sector is already in its own recession per credit union economists. Immigration crackdown raised construction labor costs 6.1%. Now add higher lumber costs (tariffs), higher energy costs (diesel, equipment), and higher materials costs (petroleum-based products). New housing supply — already insufficient — shrinks further. The largest asset most Americans own stagnates or declines.", status: "developing", date: "Q2 2026" },
+      { depth: 6, title: "Consumer Spending Collapses", desc: "Higher gas + higher food (see Food Chain) + higher electricity + frozen home values + weakening job market = consumers pull back sharply. This isn't theoretical — consumer sentiment is already at its worst since the pandemic. The 'affordability crisis' is the #1 political flashpoint ahead of midterms. Consumer spending is 70% of U.S. GDP. When it contracts, everything contracts.", status: "developing", date: "Q2–Q3 2026" },
+      { depth: 7, title: "Businesses Cut, Small Firms Fail", desc: "Revenue drops as consumers retreat. Energy and input costs rise. Small businesses — already at lowest revenue expectations since 2020 — can't absorb the squeeze. They cut hours, delay hiring, then lay off. Feb jobs report: -92,000 (expected +59,000). Job growth negative in 5 of last 9 months. The BLS already revised 2025 job creation DOWN by 911,000 — largest revision ever. Fed Chair Powell says the economy may have been losing jobs since April 2025.", status: "emerging", date: "Q2–Q3 2026" },
+      { depth: 8, title: "Regional Banking Stress Intensifies", desc: "Banks still holding commercial real estate loans from the pandemic's office vacancy wave. Now add: consumer credit stress (credit card delinquencies rising), small business defaults, higher operating costs for borrowers, and deposit competition from high-yield alternatives. The CRE maturity wall identified in our Oct 2025 analysis collides with an energy-driven downturn. Regional bank failures become probable, not theoretical. Credit tightening accelerates the recession.", status: "projected", date: "Q3–Q4 2026" },
+      { depth: 9, title: "The Federal Deficit Explodes", desc: "Multiple fiscal hits converge simultaneously: (1) Tax revenue declines as economy weakens. (2) Military spending spikes — Iran + Venezuela operations + ongoing defense commitments. (3) IEEPA tariff refunds of ~$175–179 billion ordered by courts. (4) Section 122 replacement tariffs collect far less (15% vs. up to 145%). (5) 'One Big Beautiful Bill' tax cuts reduce revenue. (6) Social safety net costs rise — unemployment insurance, food assistance, Medicaid. (7) Interest on $30T+ debt: every 1% rate increase = ~$300 billion more annually. Net interest already exceeded $882B in FY2024.", status: "projected", date: "2026–2027" },
+      { depth: 10, title: "The Doom Loop Locks In", desc: "Higher deficits → more borrowing → higher rates demanded by creditors → higher interest costs → even higher deficits. This is self-reinforcing. Credit agencies are watching — a downgrade raises borrowing costs further. Social Security trust fund depletion (2033–2034) arrives with no fiscal space to address it. 70+ million Americans face automatic benefit cuts. The fiscal capacity to respond to the NEXT crisis (Taiwan conflict, climate catastrophe, pandemic) has been consumed by the cascade of costs from this one. The shock absorbers are gone.", status: "projected", date: "2027–2030" },
+    ]
+  },
+  {
+    id: "food",
+    title: "The Invisible Famine",
+    subtitle: "Gas Prices → Fertilizer → Your Grocery Bill",
+    icon: "🌾",
+    color: "#D97706",
+    status: "BUILDING",
+    summary: "The cascade nobody is tracking: how today's gas prices are locking in next season's food crisis during spring planting — irreversible once seeds are in the ground",
+    layers: [
+      { depth: 1, title: "Natural Gas Prices Surge 50–63%", desc: "Natural gas isn't just for heating. It's the primary raw material for synthetic nitrogen fertilizer — the input that makes modern agriculture possible. Without synthetic nitrogen, global crop yields drop by roughly 50%. European gas benchmarks jumped 50% in days after Hormuz closure. Asian prices up 39%. Another 6% on March 18 after the South Pars/Ras Laffan exchange. Qatar, which was producing 18.5 billion cubic feet/day, is offline.", status: "happened", date: "Mar 2–18" },
+      { depth: 2, title: "Fertilizer Production Costs Spike 40–70%", desc: "The chemical chain: Natural gas → ammonia (Haber-Bosch process) → urea (world's most-used nitrogen fertilizer). This is basic chemistry, not economics — it cannot be substituted or worked around. Every $1/MMBtu increase in gas prices adds $15–20/tonne to ammonia production costs. Qatar itself is a major fertilizer producer using its cheap gas as feedstock — that production is offline. European fertilizer plants, already stressed by 2022 gas prices, face another wave of margin compression or shutdown.", status: "happening", date: "Mar–May 2026" },
+      { depth: 3, title: "Farmers Face Impossible Math at Planting Time", desc: "Northern Hemisphere spring planting is underway RIGHT NOW — March through May is the decision window. Farmers must choose: (1) Pay 40–70% more for fertilizer and hope they can pass costs to consumers. (2) Apply less fertilizer and accept lower yields. (3) Plant fewer acres. (4) Switch to less nitrogen-intensive crops (which may have lower market value). All four choices lead to the same destination: less food production, more expensive food. The decision is being made this month.", status: "happening", date: "Mar–May 2026" },
+      { depth: 4, title: "The Yield Reduction Is Physically Locked In", desc: "THIS IS THE CRITICAL LAYER. Once seeds are planted with reduced nitrogen application, the lower yield is DETERMINED by soil chemistry. You cannot retroactively add nitrogen to a growing crop and recover lost yield. What happens in fields across the U.S., Europe, India, and China in March–May 2026 dictates what comes off those fields in August–October. The food price shock is being coded into the ground right now, invisible to anyone not watching fertilizer markets.", status: "developing", date: "Mar–May 2026" },
+      { depth: 5, title: "Harvests Fall Short of Demand", desc: "Reduced nitrogen application typically lowers grain yields 15–30% depending on crop and soil. Even a 10% global yield reduction on major staples (wheat, corn, rice, soybeans) removes hundreds of millions of tonnes from supply. Global grain stocks were already below comfortable levels before this crisis. The math is unforgiving: 8 billion people need approximately 2.8 billion tonnes of grain annually. A 10% shortfall is 280 million tonnes — roughly equal to the entire annual grain production of the United States.", status: "projected", date: "Aug–Oct 2026" },
+      { depth: 6, title: "Food Prices Spike Globally", desc: "The 2022 precedent: Russia-Ukraine war disrupted grain and fertilizer exports, driving global food prices to their highest since 2008 — roughly a 30% increase. The 2022 disruption affected primarily wheat and fertilizer from one region. The 2026 disruption affects the gas feedstock for ALL nitrogen fertilizer globally, combined with continued energy-driven transportation costs. Food price increases of 15–25% for Americans; 30–50% for import-dependent developing nations.", status: "projected", date: "Q3–Q4 2026" },
+      { depth: 7, title: "Developing World Food Crisis", desc: "Bangladesh, Pakistan, Egypt, the Philippines, and sub-Saharan Africa are most vulnerable: highly dependent on food imports, limited fiscal capacity to subsidize, populations already spending 40–60% of income on food. The UN counted 345 million people facing food insecurity after the 2022 spike. The 2026 shock is structurally deeper — affecting production capacity, not just trade routes. This number could grow to 400–500 million. Children, the elderly, and pregnant women are affected first.", status: "projected", date: "Q4 2026–2027" },
+      { depth: 8, title: "Political Instability in Critical Geographies", desc: "Food price spikes have triggered regime change repeatedly: the 2011 Arab Spring was partly driven by bread prices in Egypt and Tunisia. Egypt operates the Suez Canal — 12% of global trade transits this chokepoint. Food-driven instability in Egypt would mean BOTH major maritime chokepoints (Hormuz AND Suez) are disrupted simultaneously. That hasn't happened since... ever. It would affect not just energy but every manufactured good shipped between Asia and Europe.", status: "projected", date: "2027" },
+      { depth: 9, title: "Migration Waves and Political Backlash", desc: "Food insecurity drives migration — this is established in every historical case. Migration waves from North Africa and the Middle East toward Europe; from Central America toward the U.S. These waves arrive in receiving countries already stressed by inflation, energy costs, and weakening economies. Anti-immigrant politics strengthen. Far-right parties gain. The cooperative institutions needed to address food crises, climate change, and security threats are weakened by the political reactions to the migration those crises generate.", status: "projected", date: "2027–2028" },
+      { depth: 10, title: "The Self-Reinforcing Fragility Trap", desc: "Less cooperation → less capacity to manage the NEXT disruption → more disruption → less cooperation. The food chain doesn't end at food. It feeds into the economy chain (inflation), the alliance chain (migration-driven political shifts), the nuclear chain (unstable states pursuing deterrence), and back into itself (weakened agricultural investment → lower resilience to the next weather or conflict shock). The system becomes progressively more fragile with each cycle. Recovery requires addressing ALL chains simultaneously — which requires exactly the cooperative capacity that the crises are destroying.", status: "projected", date: "2028+" },
+    ]
+  },
+  {
+    id: "alliances",
+    title: "The Petrodollar Fracture",
+    subtitle: "Gulf War → Alliance Shift → Dollar Decline",
+    icon: "🌐",
+    color: "#7C3AED",
+    status: "ACCELERATING",
+    summary: "How destroying Qatar's infrastructure while hosting U.S. bases inverts the logic of America's most important economic alliance — and what it means for the dollar",
+    layers: [
+      { depth: 1, title: "Gulf States' Infrastructure Destroyed as Collateral", desc: "Qatar's Ras Laffan (20% of world LNG): extensive missile damage. Saudi Arabia's Ras Tanura (550K b/d): struck twice in March. Bahrain's Sitra refinery (405K b/d), Kuwait's Mina al-Ahmadi (346K b/d), UAE's Fujairah port, Iraq's Majnoon oil field (240K b/d): all attacked by Iranian missiles/drones. These nations did not choose this war. Their infrastructure is being destroyed because they host U.S. military assets that are being used to strike Iran.", status: "happened", date: "Mar 2–18" },
+      { depth: 2, title: "The Protector Becomes the Source of Threat", desc: "For 40+ years, the U.S.-Gulf grand bargain: America provides security guarantees; Gulf states host military bases and sell oil in dollars. Iran's targeting logic inverts this: 'Your bases attack us, your infrastructure is a legitimate target.' Qatar called the South Pars strike 'dangerous and irresponsible.' This isn't diplomatic language — it's a Gulf state publicly criticizing the military operations being conducted from its territory. The alliance logic has broken.", status: "happening", date: "Mar 2026" },
+      { depth: 3, title: "Gulf Leadership Reassesses Security Architecture", desc: "Every Gulf capital is now asking: does hosting U.S. forces make us safer or make us targets? This question was theoretical before February 28. It is now answered by crater damage at Ras Laffan. Saudi Arabia has deepened ties with China since Xi's 2022 visit. The UAE purchased Chinese military systems. All Gulf states participate in China's Belt and Road Initiative. The alternative security architecture already exists in embryonic form.", status: "developing", date: "2026" },
+      { depth: 4, title: "China Fills the Vacuum", desc: "Beijing is perfectly positioned: opposing the Iran war, calling for Hormuz freedom, offering mediation. China is the Gulf's largest oil customer — and doesn't demand military basing rights or conduct regime-change operations in the region. The Shanghai Cooperation Organization provides a multilateral framework. China brokered the Saudi-Iran normalization in 2023 — demonstrating diplomatic capacity the U.S. has lost. Gulf states don't need to 'choose sides' — they can diversify, which is worse for U.S. influence than outright defection.", status: "developing", date: "2026–2027" },
+      { depth: 5, title: "Oil Trade Begins Leaving the Dollar", desc: "Saudi Arabia already conducted limited yuan-denominated oil sales. If Gulf states begin pricing even 10–20% of oil exports in yuan, rupees, or a currency basket, the petrodollar system — which has underpinned dollar dominance since the 1974 Saudi-U.S. agreement — begins structural erosion. This isn't a sudden 'death of the dollar.' It's a slow diversification that compounds over years. But it starts with exactly the kind of alliance rupture that's happening now.", status: "projected", date: "2026–2028" },
+      { depth: 6, title: "Central Banks Diversify Reserves Faster", desc: "Countries hold dollars because they need them to buy oil and because U.S. Treasuries are the world's 'safe asset.' If oil can be purchased in other currencies, structural dollar demand drops. Central bank dollar reserves already fell from 72% to 58% of global total over two decades. This trend accelerates. China's digital yuan provides an alternative settlement system that bypasses SWIFT — and Gulf states have reason to want alternatives after watching how financial sanctions were weaponized against Russia.", status: "projected", date: "2027–2030" },
+      { depth: 7, title: "U.S. Borrowing Costs Rise Structurally", desc: "Reduced global demand for dollars → less demand for U.S. Treasuries → the U.S. must offer higher yields to attract buyers → higher interest rates on $30+ trillion in national debt. This is not a crisis — it's a ratchet. Each 1% increase in average borrowing costs adds ~$300 billion to annual interest payments. This happens slowly enough that no single day feels catastrophic, but cumulatively it reshapes the entire federal budget.", status: "projected", date: "2028–2032" },
+      { depth: 8, title: "Fiscal Crisis Deepens Into Structural Trap", desc: "Higher borrowing costs collide with every other fiscal pressure: exploding deficits (Layer 9 of Economy Chain), Social Security/Medicare trust fund depletion (2033–2034), military spending demands (Iran, Venezuela, Taiwan deterrence, NATO commitments), IEEPA refund obligations, and reduced tariff revenue. The arithmetic becomes impossible: the U.S. cannot simultaneously fund defense, entitlements, interest payments, and domestic investment. Something — or everything — gets cut.", status: "projected", date: "2030–2035" },
+      { depth: 9, title: "Military Capability Erodes Through Fiscal Pressure", desc: "Defense budgets compete with interest payments and mandatory spending. The Navy was already heading toward 280 ships (its minimum) in 2027. Fiscal constraints make the trough deeper and recovery slower. Modernization programs (Columbia-class submarines, B-21 bombers, hypersonic weapons) face delays and cost overruns in a tighter fiscal environment. The defense industrial base — already unable to produce at scale for peer conflict — atrophies further.", status: "projected", date: "2030–2040" },
+      { depth: 10, title: "Deterrence Fails Through Accumulated Erosion", desc: "Weaker military + frayed alliances + fiscal constraints + demonstrated overextension + adversaries who have studied U.S. capacity limits = reduced deterrence. This is how great power transitions happen: not through a single decisive defeat, but through the compounding costs of overextension meeting the compounding capabilities of rising challengers. The Taiwan scenario we identified as peak risk in 2027–2030 arrives in an environment where every tool for managing it has been degraded by the cascade that preceded it.", status: "projected", date: "2035+" },
+    ]
+  },
+  {
+    id: "technology",
+    title: "The AI Reckoning",
+    subtitle: "Energy Costs → Data Centers → Market Crash → Lost Decade",
+    icon: "🤖",
+    color: "#0891B2",
+    status: "BUILDING",
+    summary: "How the energy crisis intersects with the largest technology investment bubble in history — and what it means for your retirement portfolio",
+    layers: [
+      { depth: 1, title: "Energy Costs Spike 30–50% for the Most Energy-Intensive Industry", desc: "Data centers are among the most electricity-hungry facilities on Earth. A single large-scale AI training run can cost $100M+ — a significant portion of which is energy. The AI buildout was already straining U.S. electrical grid capacity in Northern Virginia, Dallas, and Phoenix. Now add 30–50% energy price increases from the oil/gas shock. Every data center's operating costs just jumped — and these are 24/7/365 operations that cannot be turned off.", status: "happened", date: "Mar 2026" },
+      { depth: 2, title: "Hyperscaler Economics Compress", desc: "Amazon, Google, Meta, Microsoft, and Oracle planned $650–750 billion in 2026 capital expenditure for AI infrastructure. These plans assumed moderate, stable energy costs. Several hyperscalers (Amazon, Meta, Google) were already approaching negative free cash flow from the buildout — borrowing $100B+ annually. Energy cost increases go straight to the bottom line. Margins compress. The economic case for continued spending at this pace weakens.", status: "happening", date: "Q1–Q2 2026" },
+      { depth: 3, title: "The ROI Question Becomes Unavoidable", desc: "MIT study: 95% of organizations achieved zero ROI on generative AI investments. BofA survey: one-third of fund managers believe companies are overinvesting. AI infrastructure spending reached 0.8% of GDP — approaching historical tech boom peaks. The depreciation cost on $2 trillion in planned AI assets through 2030 would reach ~$400B/year, exceeding combined hyperscaler profits. In a favorable economic environment, this can be ignored. In a stagflationary environment with margin pressure, CFOs demand proof of returns.", status: "developing", date: "Q2 2026" },
+      { depth: 4, title: "Capital Expenditure Growth Decelerates Ahead of Schedule", desc: "Goldman Sachs projected hyperscaler capex growth slowing from 60%+ to 17% by 2027. Energy-driven margin pressure and economic uncertainty pull this deceleration forward by 2–3 quarters. Companies don't cancel AI — they slow it, defer expansions, negotiate harder on cloud pricing. But financial markets price deceleration 6–12 months before it shows in earnings. The narrative shift from 'infinite growth' to 'decelerating growth' triggers revaluation.", status: "projected", date: "Q2–Q3 2026" },
+      { depth: 5, title: "Semiconductor Demand Softens", desc: "TSMC's CEO described demand as 'not enough, not enough, still not enough.' That was when hyperscalers were spending at 60%+ growth rates. If spending growth halves, 'not enough' becomes 'approaching sufficiency.' TSMC stock has historically peaked 1–2 quarters before earnings peak and declined 30–59% in prior downturns even when revenue barely dipped. The semiconductor cycle (16 quarters average, current cycle started Nov 2023) naturally peaks around Q3 2026–Q3 2027.", status: "projected", date: "Q3–Q4 2026" },
+      { depth: 6, title: "Mega-Cap Tech Correction: 25–35% Decline", desc: "The 'Magnificent 7' (Apple, Microsoft, Alphabet, Amazon, NVIDIA, Meta, Tesla) drove the majority of S&P 500 gains in 2023–2025. NVIDIA trades at ~40x earnings, Broadcom at ~32x, TSMC at ~25x. These multiples assume sustained hypergrowth. Multiple compression from 25x to the historical 18–20x average implies 20–30% downside for the sector's largest names. A broad tech correction of 25–35% is the base case — not a prediction of catastrophe, but a reversion to historical norms.", status: "projected", date: "Q3 2026–Q1 2027" },
+      { depth: 7, title: "Wealth Effect Reversal Hits the Real Economy", desc: "When stock portfolios drop, people feel poorer and spend less — the 'reverse wealth effect.' In 2022, the tech selloff contributed to consumer pullback. A 25–35% tech correction in 2026–2027, layered on top of energy-driven inflation and food price increases, creates a triple hit to consumer confidence and spending. Retirement accounts (401(k)s, IRAs), pension funds, and university endowments all take losses simultaneously.", status: "projected", date: "Q4 2026–2027" },
+      { depth: 8, title: "AI Productivity Revolution Delays by 3–5 Years", desc: "The promise of AI was a productivity revolution that would accelerate GDP growth, help service national debt, create new industries, and transform work. If the investment cycle is disrupted — not cancelled, but slowed — those productivity gains arrive later. Enterprise AI adoption timelines extend. Workforce transformation (both job displacement and job creation) pushes right. The economic benefits that were supposed to justify the investment don't materialize on schedule.", status: "projected", date: "2027–2030" },
+      { depth: 9, title: "The Valuation Basis for Everything Shifts", desc: "Goldman Sachs estimated AI could create $8 trillion in value through labor productivity gains — gains that justified current stock valuations AND debt trajectory assumptions (faster GDP growth → more tax revenue → more sustainable debt). If those gains are delayed 3–5 years: current equity valuations are wrong by 15–25%, and debt-to-GDP projections are worse than already dire CBO estimates. This affects not just tech investors but every pension fund, insurance company, and endowment that holds U.S. equities.", status: "projected", date: "2028–2032" },
+      { depth: 10, title: "The Lost Decade", desc: "Research Affiliates projects S&P 500 total returns of just 3.1% annually for the next decade — barely above projected inflation of 2.4%. That's one-fifth the returns of 2016–2026. If the AI investment cycle is disrupted, even that modest forecast may be optimistic. Growth stocks projected to return just 1.4% annually — below inflation. For a generation of workers counting on investment returns for retirement, for pension funds already underfunded, and for state/local governments dependent on investment earnings: the math simply doesn't work.", status: "projected", date: "2026–2036" },
+    ]
+  },
+  {
+    id: "nuclear",
+    title: "The Proliferation Cascade",
+    subtitle: "Today's Strikes → Tomorrow's Nuclear Middle East",
+    icon: "☢️",
+    color: "#9F1239",
+    status: "ACCELERATING",
+    summary: "Why the destruction of Iran's conventional defenses makes a nuclear-armed Middle East nearly inevitable — and why that's irreversible",
+    layers: [
+      { depth: 1, title: "Iran's Entire Conventional Military Destroyed", desc: "As of March 18: Iran's navy destroyed. Air force destroyed. Air defense systems destroyed. Radar destroyed. Supreme Leader Khamenei assassinated (Feb 28). Top intelligence chief killed (Mar 18). Strikes have hit nuclear-related facilities. South Pars gas processing (economic lifeline) struck. The most comprehensive military dismantling of a major nation since 2003 Iraq — but Iran is 4x larger, 3x more populated, and has a 3,000-year history of civilization.", status: "happened", date: "Feb 28 – Mar 18" },
+      { depth: 2, title: "Strikes Land Near Nuclear Infrastructure", desc: "South Pars is near Iran's Bushehr nuclear power plant — Russia-built, partially Russian-staffed. Russia specifically condemned strikes near Bushehr. Any strike damaging reactor containment or spent fuel could release radioactive contamination into the Persian Gulf — affecting desalination plants (primary freshwater source for Gulf states), fisheries, and coastal populations across seven countries. This introduces both a radiological risk and a great-power entanglement (Russia has nationals on-site).", status: "happening", date: "Mar 2026" },
+      { depth: 3, title: "The Absolute Lesson: Conventional Forces = Zero Protection", desc: "Every Iranian military officer, every defense planner, every political leader in every country in the world is drawing the same conclusion: conventional military capability provided no meaningful protection against a determined U.S.-Israeli campaign. Iran had the largest military in the Middle East outside Israel. It didn't matter. The lesson is not limited to Iran — it is universal. Every nation that relies on conventional deterrence is reconsidering.", status: "happening", date: "Mar 2026" },
+      { depth: 4, title: "Nuclear Weapons Become Iranian National Consensus", desc: "Before the war, Iran's nuclear ambitions were debated internally — reformists argued for engagement, hardliners for the bomb. After the complete destruction of conventional defenses and assassination of the supreme leader, the debate is functionally over. No Iranian leader of any political persuasion can argue against a nuclear deterrent after witnessing what happened without one. This is the North Korea lesson: the Kim regime survived because it has nuclear weapons. The Gaddafi lesson: Libya gave up its program and Gaddafi was killed.", status: "developing", date: "2026–2027" },
+      { depth: 5, title: "Saudi Arabia Activates Its Nuclear Pathway", desc: "Saudi Crown Prince MBS stated explicitly that Saudi Arabia would pursue nuclear weapons if Iran did. The Saudi-Pakistan relationship provides a potential accelerated pathway — Pakistan's 'Islamic bomb' was partly funded by Saudi money. Saudi Arabia has been building civilian nuclear infrastructure (NEOM-area projects) that provides dual-use capability. Unlike Iran's pre-war program, Saudi Arabia has virtually unlimited capital to fund rapid development.", status: "projected", date: "2027–2029" },
+      { depth: 6, title: "Turkey, Egypt, and UAE Follow", desc: "Turkey has the Akkuyu nuclear plant (Russian-built) and NATO nuclear sharing arrangements. Egypt has historic nuclear ambitions and a large Russian-built reactor at El Dabaa. The UAE has the Barakah plant (4 reactors, South Korean-built). All are regional powers that cannot accept strategic inferiority to Iran and Saudi Arabia. Each has the technical infrastructure and motivation. Within 3–5 years of an Iranian weapon, 3–5 additional states could have active programs.", status: "projected", date: "2028–2031" },
+      { depth: 7, title: "5+ Nuclear States in Earth's Most Volatile Region", desc: "The Middle East — currently experiencing active wars, sectarian conflicts, border disputes, water scarcity, and refugee crises — would host more nuclear-armed states per square kilometer than any region on Earth. Nuclear deterrence theory was developed for two rational superpowers with dedicated communication channels and decades of arms control. It has never been tested with 5+ states entangled in complex, multi-directional rivalries where a conflict between any two could draw in the others.", status: "projected", date: "2030–2033" },
+      { depth: 8, title: "Deterrence Instability Becomes Structural", desc: "More nuclear actors means more failure points: accidental launch (false alarm in a high-tension environment), unauthorized use (military coup granting nuclear access to new leadership), miscalculation (conventional conflict that unintentionally crosses nuclear thresholds), or deliberate use by a desperate regime facing existential defeat. The probability of ANY nuclear incident isn't the probability of each state using weapons — it's the compound probability across ALL states, ALL failure modes, ALL years. It accumulates.", status: "projected", date: "2030+" },
+      { depth: 9, title: "Permanent Risk Premium on Global Energy", desc: "Nuclear risk doesn't just threaten the countries involved — it permanently reprices every investment, insurance contract, trade route, and business decision in the region. Gulf energy infrastructure investment carries a nuclear-risk discount forever. Insurance premiums never fully return to pre-proliferation levels. Capital flows away from the region that holds 48% of proven oil reserves and 38% of proven gas reserves. The cost of energy for everyone, everywhere, permanently increases.", status: "projected", date: "2030+" },
+      { depth: 10, title: "Structural Energy Underinvestment — Permanent", desc: "If investment in Gulf energy production is permanently deterred by nuclear risk, the world faces chronic underinvestment in the region that remains essential to global energy supply — even as renewable transition accelerates. Renewables cannot replace Gulf hydrocarbons within 10–15 years; petrochemicals, aviation fuel, industrial heating, and fertilizer feedstock depend on fossil inputs for decades. This isn't a price spike. It's a structural reduction in the planet's energy investment capacity. And unlike every other chain in this tracker, nuclear proliferation is irreversible. You cannot un-invent a weapon.", status: "projected", date: "2035+" },
+    ]
+  }
+];
+
+const CROSSLINKS = [
+  { from: "economy", fromLayer: 3, to: "food", toLayer: 2, desc: "Energy costs are the base input for fertilizer production — every dollar increase in gas prices directly raises the cost of growing food" },
+  { from: "food", fromLayer: 6, to: "economy", toLayer: 6, desc: "Food price spikes compound the consumer spending collapse — households hit by higher gas AND higher grocery bills cut discretionary spending faster" },
+  { from: "food", fromLayer: 8, to: "alliances", toLayer: 3, desc: "Food-driven instability in Egypt threatens Suez Canal operations — creating a SECOND major maritime chokepoint disruption alongside Hormuz" },
+  { from: "alliances", fromLayer: 7, to: "economy", toLayer: 10, desc: "Dollar reserve decline raises U.S. borrowing costs — accelerating the fiscal doom loop" },
+  { from: "technology", fromLayer: 7, to: "economy", toLayer: 6, desc: "Tech stock crash triggers reverse wealth effect — retirement accounts shrink, consumers spend less" },
+  { from: "economy", fromLayer: 9, to: "alliances", toLayer: 9, desc: "Fiscal crisis forces defense budget cuts — weakening the military capacity that underpins all U.S. alliances" },
+  { from: "nuclear", fromLayer: 9, to: "economy", toLayer: 2, desc: "Nuclear risk premium permanently raises energy costs for every economy on Earth" },
+  { from: "nuclear", fromLayer: 7, to: "alliances", toLayer: 4, desc: "Proliferation reshapes all regional security partnerships — every alliance must account for nuclear scenarios" },
+  { from: "food", fromLayer: 9, to: "alliances", toLayer: 3, desc: "Migration waves from food crises fuel anti-immigrant politics that weaken multilateral cooperation" },
+  { from: "economy", fromLayer: 4, to: "technology", toLayer: 3, desc: "Fed paralysis + stagflation makes capital more expensive and ROI pressure more intense for AI investments" },
+  { from: "alliances", fromLayer: 5, to: "economy", toLayer: 9, desc: "If oil leaves the dollar, U.S. fiscal arithmetic changes fundamentally — less foreign demand for Treasuries" },
+  { from: "nuclear", fromLayer: 3, to: "nuclear", toLayer: 4, desc: "The lesson that conventional forces provide zero protection applies to EVERY country, not just Iran — accelerating proliferation globally" },
+  { from: "technology", fromLayer: 9, to: "economy", toLayer: 10, desc: "Delayed AI productivity gains mean GDP grows slower than debt — worsening every fiscal ratio" },
+  { from: "economy", fromLayer: 8, to: "food", toLayer: 3, desc: "Credit tightening from banking stress makes it harder for farmers to finance inputs — amplifying the fertilizer affordability problem" },
+];
+
+const STATUS_COLORS = {
+  happened: "#DC2626",
+  happening: "#EA580C",
+  developing: "#D97706",
+  emerging: "#CA8A04",
+  projected: "#6B7280",
+};
+const STATUS_LABELS = {
+  happened: "Has Happened",
+  happening: "Happening Now",
+  developing: "Developing",
+  emerging: "Emerging",
+  projected: "Projected",
+};
+
+const EVENTS = [
+  { date: "Jan 3", event: "U.S. captures Maduro in Venezuela", color: "#7C3AED" },
+  { date: "Feb 20", event: "Supreme Court strikes down IEEPA tariffs (6-3)", color: "#D97706" },
+  { date: "Feb 28", event: "U.S.-Israel strike Iran; Khamenei killed", color: "#DC2626" },
+  { date: "Mar 2", event: "Qatar halts LNG (20% of global supply) after strikes", color: "#DC2626" },
+  { date: "Mar 4", event: "Iran effectively closes Strait of Hormuz", color: "#DC2626" },
+  { date: "Mar 6", event: "Feb jobs report: -92,000 (expected +59,000)", color: "#D97706" },
+  { date: "Mar 18", event: "Israel strikes South Pars; Iran hits Qatar's Ras Laffan", color: "#9F1239" },
+  { date: "Mar 18", event: "Iran threatens 5 more Gulf facilities. Oil breaks $108.", color: "#9F1239" },
+  { date: "Mar 18", event: "PPI: 0.7% (2× expected). Fed holds rates.", color: "#D97706" },
+];
+
+function App() {
+  const [selectedChain, setSelectedChain] = useState(null);
+  const [expandedLayers, setExpandedLayers] = useState({});
+  const [view, setView] = useState("overview");
+
+  const chain = CHAINS.find(c => c.id === selectedChain);
+
+  const toggleLayer = useCallback((i) => {
+    setExpandedLayers(prev => ({...prev, [i]: !prev[i]}));
+  }, []);
+
+  const openChain = useCallback((id) => {
+    setSelectedChain(id);
+    setExpandedLayers({});
+    setView("overview");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  return (
+    <div>
+      {/* Header */}
+      <header style={{
+        borderBottom: "1px solid #1A1A1A",
+        padding: "20px 24px",
+        position: "sticky", top: 0, zIndex: 100,
+        background: "#0A0A0BEE",
+        backdropFilter: "blur(12px)",
+      }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+          <div>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#DC2626", fontWeight: 700 }}>
+              <span className="pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#DC2626", marginRight: 8, verticalAlign: "middle" }}></span>
+              LIVE TRACKING • UPDATED MARCH 18, 2026
+            </div>
+            <h1 style={{ margin: "4px 0 0", fontSize: 20, fontWeight: 700, color: "#FFF", letterSpacing: -0.3 }}>
+              Global Polycrisis Cascade Tracker
+            </h1>
+            <div style={{ fontSize: 12, color: "#666", marginTop: 2 }}>
+              Five crisis chains traced 10 layers deep • How they interact and amplify each other
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 6 }}>
+            {[["overview", "Chains"], ["connections", "Connections"], ["timeline", "Timeline"]].map(([v, label]) => (
+              <button key={v} onClick={() => { setView(v); setSelectedChain(null); }}
+                style={{
+                  padding: "6px 14px", borderRadius: 6, border: "1px solid #333",
+                  background: view === v ? "#222" : "transparent",
+                  color: view === v ? "#FFF" : "#888",
+                  cursor: "pointer", fontSize: 12, fontWeight: 600,
+                }}>
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "20px 24px 60px" }}>
+        {/* STATUS LEGEND */}
+        <div style={{ display: "flex", gap: 16, marginBottom: 20, flexWrap: "wrap" }}>
+          {Object.entries(STATUS_COLORS).map(([key, color]) => (
+            <div key={key} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: color, boxShadow: key === "happened" || key === "happening" ? `0 0 6px ${color}88` : "none" }} />
+              <span style={{ color: "#888" }}>{STATUS_LABELS[key]}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* OVERVIEW */}
+        {view === "overview" && !selectedChain && (
+          <div className="fade-in">
+            <p style={{ color: "#999", fontSize: 14, lineHeight: 1.7, maxWidth: 700, marginBottom: 24 }}>
+              Each card below is a <strong style={{ color: "#CCC" }}>cascade chain</strong> — a sequence of dominoes where each one knocks over the next.
+              The deeper you go, the harder the effects are to reverse. Click any chain to trace all 10 layers.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 16 }}>
+              {CHAINS.map(c => {
+                const active = c.layers.filter(l => l.status !== "projected").length;
+                return (
+                  <div key={c.id} onClick={() => openChain(c.id)}
+                    style={{
+                      background: "#111", border: `1px solid ${c.color}22`, borderRadius: 12,
+                      padding: 20, cursor: "pointer", transition: "all 0.2s", position: "relative", overflow: "hidden",
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = c.color + "88"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = c.color + "22"; e.currentTarget.style.transform = "none"; }}
+                  >
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${c.color}, transparent)` }} />
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                      <span style={{ fontSize: 28 }}>{c.icon}</span>
+                      <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: c.color, background: c.color + "15", padding: "3px 8px", borderRadius: 4 }}>{c.status}</span>
+                    </div>
+                    <h3 style={{ margin: "12px 0 4px", fontSize: 17, fontWeight: 700, color: "#FFF" }}>{c.title}</h3>
+                    <div style={{ fontSize: 12, color: c.color, marginBottom: 8, fontWeight: 500 }}>{c.subtitle}</div>
+                    <p style={{ fontSize: 13, color: "#999", lineHeight: 1.5, margin: "0 0 16px" }}>{c.summary}</p>
+                    <div style={{ display: "flex", gap: 3 }}>
+                      {c.layers.map((l, i) => (
+                        <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: STATUS_COLORS[l.status], opacity: l.status === "projected" ? 0.3 : 1 }} />
+                      ))}
+                    </div>
+                    <div style={{ fontSize: 11, color: "#555", marginTop: 8 }}>{active}/10 layers active or developing • Click →</div>
+                  </div>
+                );
+              })}
+            </div>
+            {/* Key Insight */}
+            <div style={{ marginTop: 32, padding: 24, background: "#111", borderRadius: 12, border: "1px solid #DC262622" }}>
+              <h3 style={{ color: "#DC2626", fontSize: 15, margin: "0 0 8px" }}>Why "Polycrisis" — Not Just "Multiple Crises"</h3>
+              <p style={{ color: "#CCC", fontSize: 14, lineHeight: 1.7, margin: 0 }}>
+                If these were five separate crises, you could solve them one at a time. But they interact: energy costs drive food costs. Food crises drive migration. Migration drives politics. Politics drives alliance decisions. Alliance decisions determine military posture. Military posture determines whether the next crisis can be deterred. <strong style={{ color: "#FFF" }}>Each crisis consumes the resources and institutional capacity that would buffer against the others.</strong> That's the polycrisis — not a list of problems but a system of reinforcing failures where solving one often worsens another.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* CHAIN DETAIL */}
+        {view === "overview" && selectedChain && chain && (
+          <div className="fade-in">
+            <button onClick={() => { setSelectedChain(null); setExpandedLayers({}); }}
+              style={{ background: "none", border: "1px solid #333", color: "#888", padding: "6px 14px", borderRadius: 6, cursor: "pointer", fontSize: 12, marginBottom: 20 }}>
+              ← All chains
+            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+              <span style={{ fontSize: 36 }}>{chain.icon}</span>
+              <div>
+                <h2 style={{ margin: 0, fontSize: 24, color: "#FFF" }}>{chain.title}</h2>
+                <div style={{ fontSize: 14, color: chain.color, fontWeight: 500 }}>{chain.subtitle}</div>
+              </div>
+            </div>
+            <p style={{ color: "#999", fontSize: 14, lineHeight: 1.7, maxWidth: 700, marginBottom: 4 }}>{chain.summary}</p>
+            <p style={{ color: "#666", fontSize: 13, marginBottom: 24 }}>Each layer triggers the next. Click any layer to expand the full explanation.</p>
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", left: 19, top: 0, bottom: 0, width: 2, background: `linear-gradient(to bottom, ${chain.color}, ${chain.color}11)` }} />
+              {chain.layers.map((layer, i) => {
+                const isActive = layer.status === "happened" || layer.status === "happening";
+                const isExpanded = expandedLayers[i];
+                const crosslinks = CROSSLINKS.filter(cl =>
+                  (cl.from === chain.id && cl.fromLayer === layer.depth) ||
+                  (cl.to === chain.id && cl.toLayer === layer.depth)
+                );
+                return (
+                  <div key={i} onClick={() => toggleLayer(i)} style={{ display: "flex", gap: 16, marginBottom: 10, cursor: "pointer", position: "relative" }}>
+                    <div style={{ width: 40, minWidth: 40, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 4 }}>
+                      <div style={{
+                        width: isActive ? 18 : 14, height: isActive ? 18 : 14, borderRadius: "50%",
+                        background: STATUS_COLORS[layer.status], border: `2px solid ${isActive ? STATUS_COLORS[layer.status] : "#333"}`,
+                        boxShadow: isActive ? `0 0 12px ${STATUS_COLORS[layer.status]}66` : "none", zIndex: 1,
+                      }} />
+                      <div style={{ fontSize: 10, color: "#555", marginTop: 4, fontWeight: 700 }}>L{layer.depth}</div>
+                    </div>
+                    <div style={{
+                      flex: 1, background: isExpanded ? "#151515" : "#0F0F0F",
+                      border: `1px solid ${isExpanded ? chain.color + "44" : "#1A1A1A"}`, borderRadius: 10, padding: "14px 18px",
+                      transition: "all 0.15s",
+                    }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+                        <h4 style={{ margin: 0, fontSize: 15, color: "#FFF", fontWeight: 600 }}>{layer.title}</h4>
+                        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                          <span style={{ fontSize: 10, fontWeight: 600, color: STATUS_COLORS[layer.status], background: STATUS_COLORS[layer.status] + "15", padding: "2px 8px", borderRadius: 4 }}>
+                            {STATUS_LABELS[layer.status]}
+                          </span>
+                          <span style={{ fontSize: 11, color: "#555" }}>{layer.date}</span>
+                        </div>
+                      </div>
+                      {isExpanded && (
+                        <div style={{ marginTop: 12 }} className="fade-in">
+                          <p style={{ fontSize: 13, color: "#BBB", lineHeight: 1.75, margin: 0 }}>{layer.desc}</p>
+                          {crosslinks.length > 0 && (
+                            <div style={{ marginTop: 14, padding: "12px 14px", background: "#0A0A0B", borderRadius: 8, border: "1px solid #1A1A1A" }}>
+                              <div style={{ fontSize: 10, color: "#555", fontWeight: 700, letterSpacing: 1, marginBottom: 8, textTransform: "uppercase" }}>
+                                Connected to other chains:
+                              </div>
+                              {crosslinks.map((cl, j) => {
+                                const isOutgoing = cl.from === chain.id && cl.fromLayer === layer.depth;
+                                const otherId = isOutgoing ? cl.to : cl.from;
+                                const other = CHAINS.find(c => c.id === otherId);
+                                return (
+                                  <div key={j} style={{ fontSize: 12, color: other.color, marginBottom: 6, cursor: "pointer", padding: "4px 0" }}
+                                    onClick={(e) => { e.stopPropagation(); openChain(other.id); }}>
+                                    <span style={{ marginRight: 6 }}>{isOutgoing ? "→" : "←"}</span>
+                                    <span style={{ marginRight: 6 }}>{other.icon}</span>
+                                    <strong>{other.title}:</strong>{" "}
+                                    <span style={{ color: "#999" }}>{cl.desc}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                          {i < chain.layers.length - 1 && (
+                            <div style={{ marginTop: 12, fontSize: 12, color: chain.color, fontWeight: 500 }}>
+                              ↓ This triggers Layer {layer.depth + 1}: {chain.layers[i+1].title}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {!isExpanded && <div style={{ fontSize: 12, color: "#444", marginTop: 6 }}>Click to expand →</div>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* CONNECTIONS VIEW */}
+        {view === "connections" && (
+          <div className="fade-in">
+            <h2 style={{ fontSize: 20, color: "#FFF", marginBottom: 4 }}>How the Chains Connect</h2>
+            <p style={{ color: "#999", fontSize: 14, lineHeight: 1.7, maxWidth: 700, marginBottom: 24 }}>
+              No crisis exists alone. These are the feedback loops — the channels through which solving or ignoring one problem changes all the others.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 12 }}>
+              {CROSSLINKS.map((cl, i) => {
+                const from = CHAINS.find(c => c.id === cl.from);
+                const to = CHAINS.find(c => c.id === cl.to);
+                return (
+                  <div key={i} style={{ background: "#111", borderRadius: 10, padding: 16, border: "1px solid #1A1A1A" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, flexWrap: "wrap" }}>
+                      <span style={{ fontSize: 18 }}>{from.icon}</span>
+                      <span style={{ color: from.color, fontSize: 12, fontWeight: 600 }}>{from.title} L{cl.fromLayer}</span>
+                      <span style={{ color: "#444" }}>→</span>
+                      <span style={{ fontSize: 18 }}>{to.icon}</span>
+                      <span style={{ color: to.color, fontSize: 12, fontWeight: 600 }}>{to.title} L{cl.toLayer}</span>
+                    </div>
+                    <div style={{ fontSize: 13, color: "#BBB", lineHeight: 1.6 }}>{cl.desc}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* TIMELINE VIEW */}
+        {view === "timeline" && (
+          <div className="fade-in">
+            <h2 style={{ fontSize: 20, color: "#FFF", marginBottom: 4 }}>Event Timeline</h2>
+            <p style={{ color: "#999", fontSize: 14, lineHeight: 1.7, maxWidth: 700, marginBottom: 24 }}>
+              The events that triggered the cascades — nine watershed moments in 77 days.
+            </p>
+            <div style={{ position: "relative", paddingLeft: 30 }}>
+              <div style={{ position: "absolute", left: 10, top: 0, bottom: 0, width: 2, background: "linear-gradient(to bottom, #DC2626, #DC262622)" }} />
+              {EVENTS.map((e, i) => (
+                <div key={i} style={{ marginBottom: 16, position: "relative" }} className="fade-in">
+                  <div style={{
+                    position: "absolute", left: -25, top: 6, width: 12, height: 12, borderRadius: "50%",
+                    background: e.color, border: "2px solid #0A0A0B", zIndex: 1,
+                  }} />
+                  <div style={{ background: "#111", borderRadius: 10, padding: "14px 18px", border: `1px solid ${e.color}22` }}>
+                    <span style={{ color: e.color, fontWeight: 700, fontSize: 14, marginRight: 12 }}>{e.date}</span>
+                    <span style={{ color: "#CCC", fontSize: 14 }}>{e.event}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* FOOTER */}
+        <footer style={{ marginTop: 48, padding: "24px 0", borderTop: "1px solid #1A1A1A", textAlign: "center", color: "#444", fontSize: 11, lineHeight: 1.8 }}>
+          <strong style={{ color: "#888" }}>Global Polycrisis Cascade Tracker</strong><br />
+          Research &amp; Analysis: Triparna de Vreede, Ph.D. • University of South Florida, Muma College of Business<br />
+          Data as of March 18, 2026, 11:59 PM EST • Updated on significant status change<br />
+          <span style={{ color: "#555" }}>Based on the Global Systemic Risk Report series (October 2025 – present)</span>
+        </footer>
+      </main>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>
