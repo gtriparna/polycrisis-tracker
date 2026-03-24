@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{background:#09090B;color:#E4E4E7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}::selection{background:#DC262666}::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#09090B}::-webkit-scrollbar-thumb{background:#333;border-radius:3px}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}.fi{animation:fadeIn .25s ease-out}.pl{animation:pulse 2s ease-in-out infinite}.btn{padding:5px 12px;border-radius:5px;border:1px solid #333;background:transparent;color:#888;cursor:pointer;font-size:11px;font-weight:600;transition:all .15s}.btn:hover{border-color:#555;color:#CCC}.btn.active{background:#1A1A1A;color:#FFF;border-color:#444}.card{background:#111;border-radius:10px;padding:16px;border:1px solid #1A1A1A;transition:all .15s;cursor:pointer;position:relative;overflow:hidden}.card:hover{border-color:#333;transform:translateY(-1px)}.tag{font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:3px;display:inline-block}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{background:#F8F9FA;color:#1A1A2E;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}::selection{background:#DC262633}::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#F0F0F0}::-webkit-scrollbar-thumb{background:#CCC;border-radius:3px}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}.fi{animation:fadeIn .25s ease-out}.pl{animation:pulse 2s ease-in-out infinite}.btn{padding:5px 12px;border-radius:5px;border:1px solid #D0D0D0;background:transparent;color:#666;cursor:pointer;font-size:11px;font-weight:600;transition:all .15s}.btn:hover{border-color:#999;color:#333}.btn.active{background:#FFF;color:#1A1A2E;border-color:#999;box-shadow:0 1px 3px rgba(0,0,0,0.1)}.card{background:#FFFFFF;border-radius:10px;padding:16px;border:1px solid #E0E0E0;transition:all .15s;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06)}.card:hover{border-color:#BBB;transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,0.1)}.tag{font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:3px;display:inline-block}
 </style>
 </head>
 <body>
@@ -39,15 +39,15 @@ const tog=useCallback(i=>setExp(p=>({...p,[i]:!p[i]})),[]);
 
 return React.createElement("div",null,
   // HEADER
-  React.createElement("header",{style:{borderBottom:"1px solid #1A1A1A",padding:"16px 20px",position:"sticky",top:0,zIndex:100,background:"#09090BEE",backdropFilter:"blur(12px)"}},
+  React.createElement("header",{style:{borderBottom:"1px solid #E0E0E0",padding:"16px 20px",position:"sticky",top:0,zIndex:100,background:"#F8F9FAEE",backdropFilter:"blur(12px)"}},
     React.createElement("div",{style:{maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:10}},
       React.createElement("div",null,
         React.createElement("div",{style:{fontSize:9,letterSpacing:3,color:"#DC2626",fontWeight:700}},
           React.createElement("span",{className:"pl",style:{display:"inline-block",width:6,height:6,borderRadius:"50%",background:"#DC2626",marginRight:8,verticalAlign:"middle"}}),
           "LIVE \u2022 MARCH 24, 2026 \u2022 15 CHAINS \u2022 150 LAYERS"
         ),
-        React.createElement("h1",{style:{margin:"3px 0 0",fontSize:18,fontWeight:700,color:"#FFF"}},"Global Polycrisis Cascade Tracker"),
-        React.createElement("div",{style:{fontSize:11,color:"#555"}},"How fifteen simultaneous crises interact and amplify each other")
+        React.createElement("h1",{style:{margin:"3px 0 0",fontSize:18,fontWeight:700,color:"#1A1A2E"}},"Global Polycrisis Cascade Tracker"),
+        React.createElement("div",{style:{fontSize:11,color:"#888"}},"How fifteen simultaneous crises interact and amplify each other")
       ),
       React.createElement("div",{style:{display:"flex",gap:5,flexWrap:"wrap"}},
         ["overview","connections","timeline"].map(v=>
@@ -65,10 +65,10 @@ return React.createElement("div",null,
     React.createElement("div",{style:{display:"flex",gap:14,marginBottom:16,flexWrap:"wrap",alignItems:"center"}},
       Object.entries(ST).map(([k,v])=>React.createElement("div",{key:k,style:{display:"flex",alignItems:"center",gap:5,fontSize:10}},
         React.createElement("div",{style:{width:7,height:7,borderRadius:"50%",background:v.c,boxShadow:(k==="happened"||k==="happening")?`0 0 5px ${v.c}88`:"none"}}),
-        React.createElement("span",{style:{color:"#666"}},v.l)
+        React.createElement("span",{style:{color:"#777"}},v.l)
       )),
-      React.createElement("span",{style:{color:"#333"}},"|"),
-      React.createElement("span",{style:{fontSize:10,color:"#555"}},CHAINS.length+" chains \u2022 "+CHAINS.reduce((a,c)=>a+c.layers.length,0)+" layers \u2022 "+LINKS.length+" connections")
+      React.createElement("span",{style:{color:"#555"}},"|"),
+      React.createElement("span",{style:{fontSize:10,color:"#888"}},CHAINS.length+" chains \u2022 "+CHAINS.reduce((a,c)=>a+c.layers.length,0)+" layers \u2022 "+LINKS.length+" connections")
     ),
 
     // OVERVIEW
@@ -91,24 +91,24 @@ return React.createElement("div",null,
             React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}},
               React.createElement("span",{style:{fontSize:24}},ch.icon),
               React.createElement("div",{style:{display:"flex",gap:5}},
-                React.createElement("span",{className:"tag",style:{color:CATS[ch.cat].color,background:CATS[ch.cat].color+"15"}},CATS[ch.cat].label),
-                React.createElement("span",{className:"tag",style:{color:ch.color,background:ch.color+"15"}},ch.status)
+                React.createElement("span",{className:"tag",style:{color:CATS[ch.cat].color,background:CATS[ch.cat].color+"18"}},CATS[ch.cat].label),
+                React.createElement("span",{className:"tag",style:{color:ch.color,background:ch.color+"18"}},ch.status)
               )
             ),
-            React.createElement("h3",{style:{margin:"8px 0 3px",fontSize:15,fontWeight:700,color:"#FFF"}},ch.title),
+            React.createElement("h3",{style:{margin:"8px 0 3px",fontSize:15,fontWeight:700,color:"#1A1A2E"}},ch.title),
             React.createElement("div",{style:{fontSize:11,color:ch.color,fontWeight:500,marginBottom:6}},ch.sub),
-            React.createElement("p",{style:{fontSize:12,color:"#888",lineHeight:1.5,margin:"0 0 12px"}},ch.sum),
+            React.createElement("p",{style:{fontSize:12,color:"#777",lineHeight:1.5,margin:"0 0 12px"}},ch.sum),
             React.createElement("div",{style:{display:"flex",gap:2}},
               ch.layers.map((l,i)=>React.createElement("div",{key:i,style:{flex:1,height:3,borderRadius:2,background:ST[l.s].c,opacity:l.s==="projected"?.25:1}}))
             ),
-            React.createElement("div",{style:{fontSize:10,color:"#444",marginTop:6}},active+"/10 active \u2022 Click \u2192")
+            React.createElement("div",{style:{fontSize:10,color:"#777",marginTop:6}},active+"/10 active \u2022 Click \u2192")
           )
         })
       ),
       // Insight box
-      React.createElement("div",{style:{marginTop:24,padding:20,background:"#111",borderRadius:10,border:"1px solid #DC262618"}},
+      React.createElement("div",{style:{marginTop:24,padding:20,background:"#FFF",borderRadius:10,border:"1px solid #DC262630"}},
         React.createElement("h3",{style:{color:"#DC2626",fontSize:14,margin:"0 0 6px"}},"Why 15 Chains, Not 5"),
-        React.createElement("p",{style:{color:"#BBB",fontSize:13,lineHeight:1.7,margin:0}},
+        React.createElement("p",{style:{color:"#444",fontSize:13,lineHeight:1.7,margin:0}},
           "The original framework tracked five domains. Deep research revealed ten more: water infrastructure millions depend on for survival, insurance markets that make trade possible, cyber warfare targeting hospitals, a pandemic virus spreading while the CDC is gutted, a labor force that vanished, federal data disappearing, climate accelerating while monitors go dark, two chokepoints closed simultaneously, a hollowed government, and a society losing shared reality. Each crisis consumes the resources that would buffer against the others. That's the polycrisis."
         )
       )
@@ -120,41 +120,41 @@ return React.createElement("div",null,
       React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10,margin:"16px 0 6px"}},
         React.createElement("span",{style:{fontSize:32}},c.icon),
         React.createElement("div",null,
-          React.createElement("h2",{style:{margin:0,fontSize:20,color:"#FFF"}},c.title),
+          React.createElement("h2",{style:{margin:0,fontSize:20,color:"#1A1A2E"}},c.title),
           React.createElement("div",{style:{fontSize:13,color:c.color,fontWeight:500}},c.sub)
         )
       ),
-      React.createElement("p",{style:{color:"#888",fontSize:13,lineHeight:1.6,maxWidth:700,marginBottom:16}},c.sum),
+      React.createElement("p",{style:{color:"#777",fontSize:13,lineHeight:1.6,maxWidth:700,marginBottom:16}},c.sum),
       React.createElement("div",{style:{position:"relative"}},
-        React.createElement("div",{style:{position:"absolute",left:17,top:0,bottom:0,width:2,background:"linear-gradient(to bottom,"+c.color+","+c.color+"11)"}}),
+        React.createElement("div",{style:{position:"absolute",left:17,top:0,bottom:0,width:2,background:"linear-gradient(to bottom,"+c.color+","+c.color+"22)"}}),
         c.layers.map((l,i)=>{
           const a=l.s==="happened"||l.s==="happening";
           const e=exp[i];
           const cls=LINKS.filter(cl=>(cl.f===c.id&&cl.fl===l.d)||(cl.t===c.id&&cl.tl===l.d));
           return React.createElement("div",{key:i,onClick:()=>tog(i),style:{display:"flex",gap:14,marginBottom:8,cursor:"pointer",position:"relative"}},
             React.createElement("div",{style:{width:36,minWidth:36,display:"flex",flexDirection:"column",alignItems:"center",paddingTop:3}},
-              React.createElement("div",{style:{width:a?16:12,height:a?16:12,borderRadius:"50%",background:ST[l.s].c,border:"2px solid "+(a?ST[l.s].c:"#333"),boxShadow:a?"0 0 10px "+ST[l.s].c+"66":"none",zIndex:1}}),
-              React.createElement("div",{style:{fontSize:9,color:"#555",marginTop:3,fontWeight:700}},"L"+l.d)
+              React.createElement("div",{style:{width:a?16:12,height:a?16:12,borderRadius:"50%",background:ST[l.s].c,border:"2px solid "+(a?ST[l.s].c:"#333"),boxShadow:a?"0 0 8px "+ST[l.s].c+"44":"none",zIndex:1}}),
+              React.createElement("div",{style:{fontSize:9,color:"#888",marginTop:3,fontWeight:700}},"L"+l.d)
             ),
             React.createElement("div",{style:{flex:1,background:e?"#131313":"#0D0D0D",border:"1px solid "+(e?c.color+"33":"#151515"),borderRadius:8,padding:"12px 14px",transition:"all .12s"}},
               React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:6}},
-                React.createElement("h4",{style:{margin:0,fontSize:14,color:"#FFF",fontWeight:600}},l.t),
+                React.createElement("h4",{style:{margin:0,fontSize:14,color:"#1A1A2E",fontWeight:600}},l.t),
                 React.createElement("div",{style:{display:"flex",gap:6,alignItems:"center"}},
-                  React.createElement("span",{className:"tag",style:{color:ST[l.s].c,background:ST[l.s].c+"15"}},ST[l.s].l),
-                  React.createElement("span",{style:{fontSize:10,color:"#444"}},l.dt)
+                  React.createElement("span",{className:"tag",style:{color:ST[l.s].c,background:ST[l.s].c+"18"}},ST[l.s].l),
+                  React.createElement("span",{style:{fontSize:10,color:"#777"}},l.dt)
                 )
               ),
               e&&React.createElement("div",{className:"fi",style:{marginTop:10}},
-                React.createElement("p",{style:{fontSize:12,color:"#AAA",lineHeight:1.7,margin:0}},l.desc),
-                cls.length>0&&React.createElement("div",{style:{marginTop:10,padding:"8px 12px",background:"#09090B",borderRadius:6,border:"1px solid #1A1A1A"}},
-                  React.createElement("div",{style:{fontSize:9,color:"#555",fontWeight:700,letterSpacing:1,marginBottom:6}},"CONNECTED:"),
+                React.createElement("p",{style:{fontSize:12,color:"#555",lineHeight:1.7,margin:0}},l.desc),
+                cls.length>0&&React.createElement("div",{style:{marginTop:10,padding:"8px 12px",background:"#F0F0F0",borderRadius:6,border:"1px solid #E0E0E0"}},
+                  React.createElement("div",{style:{fontSize:9,color:"#888",fontWeight:700,letterSpacing:1,marginBottom:6}},"CONNECTED:"),
                   cls.map((cl,j)=>{const o=CHAINS.find(x=>x.id===(cl.f===c.id?cl.t:cl.f));return o?React.createElement("div",{key:j,style:{fontSize:11,color:o.color,marginBottom:4,cursor:"pointer"},onClick:ev=>{ev.stopPropagation();open(o.id)}},
-                    (cl.f===c.id?"\u2192":"\u2190")+" "+o.icon+" ",React.createElement("strong",null,o.title),": ",React.createElement("span",{style:{color:"#888"}},cl.d)
+                    (cl.f===c.id?"\u2192":"\u2190")+" "+o.icon+" ",React.createElement("strong",null,o.title),": ",React.createElement("span",{style:{color:"#777"}},cl.d)
                   ):null})
                 ),
                 i<c.layers.length-1&&React.createElement("div",{style:{marginTop:8,fontSize:11,color:c.color,fontWeight:500}},"\u2193 Triggers L"+(l.d+1)+": "+c.layers[i+1].t)
               ),
-              !e&&React.createElement("div",{style:{fontSize:11,color:"#333",marginTop:4}},"Click to expand \u2192")
+              !e&&React.createElement("div",{style:{fontSize:11,color:"#555",marginTop:4}},"Click to expand \u2192")
             )
           )
         })
@@ -163,18 +163,18 @@ return React.createElement("div",null,
 
     // CONNECTIONS
     view==="connections"&&React.createElement("div",{className:"fi"},
-      React.createElement("h2",{style:{fontSize:18,color:"#FFF",marginBottom:4}},"Cross-Chain Connections ("+LINKS.length+")"),
-      React.createElement("p",{style:{color:"#888",fontSize:13,maxWidth:700,marginBottom:16}},"Each link is a channel through which one crisis amplifies another. The system's failure modes are multiplicative."),
+      React.createElement("h2",{style:{fontSize:18,color:"#1A1A2E",marginBottom:4}},"Cross-Chain Connections ("+LINKS.length+")"),
+      React.createElement("p",{style:{color:"#777",fontSize:13,maxWidth:700,marginBottom:16}},"Each link is a channel through which one crisis amplifies another. The system's failure modes are multiplicative."),
       React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:8}},
         LINKS.map((cl,i)=>{
           const f=CHAINS.find(x=>x.id===cl.f),tt=CHAINS.find(x=>x.id===cl.t);
-          return f&&tt?React.createElement("div",{key:i,style:{background:"#111",borderRadius:8,padding:12,border:"1px solid #1A1A1A",fontSize:12}},
+          return f&&tt?React.createElement("div",{key:i,style:{background:"#FFF",borderRadius:8,padding:12,border:"1px solid #E0E0E0",fontSize:12}},
             React.createElement("div",{style:{display:"flex",alignItems:"center",gap:5,marginBottom:5,flexWrap:"wrap"}},
               React.createElement("span",null,f.icon),React.createElement("span",{style:{color:f.color,fontWeight:600,fontSize:11}},f.title+" L"+cl.fl),
-              React.createElement("span",{style:{color:"#333"}},"\u2192"),
+              React.createElement("span",{style:{color:"#555"}},"\u2192"),
               React.createElement("span",null,tt.icon),React.createElement("span",{style:{color:tt.color,fontWeight:600,fontSize:11}},tt.title+" L"+cl.tl)
             ),
-            React.createElement("div",{style:{color:"#999",lineHeight:1.5}},cl.d)
+            React.createElement("div",{style:{color:"#777",lineHeight:1.5}},cl.d)
           ):null
         })
       )
@@ -182,23 +182,23 @@ return React.createElement("div",null,
 
     // TIMELINE
     view==="timeline"&&React.createElement("div",{className:"fi"},
-      React.createElement("h2",{style:{fontSize:18,color:"#FFF",marginBottom:4}},"Event Timeline"),
-      React.createElement("p",{style:{color:"#888",fontSize:13,maxWidth:700,marginBottom:16}},"77 days of watershed moments that activated 15 cascade chains."),
+      React.createElement("h2",{style:{fontSize:18,color:"#1A1A2E",marginBottom:4}},"Event Timeline"),
+      React.createElement("p",{style:{color:"#777",fontSize:13,maxWidth:700,marginBottom:16}},"77 days of watershed moments that activated 15 cascade chains."),
       React.createElement("div",{style:{position:"relative",paddingLeft:28}},
-        React.createElement("div",{style:{position:"absolute",left:9,top:0,bottom:0,width:2,background:"linear-gradient(to bottom,#DC2626,#DC262611)"}}),
+        React.createElement("div",{style:{position:"absolute",left:9,top:0,bottom:0,width:2,background:"linear-gradient(to bottom,#DC2626,#DC262622)"}}),
         EVENTS.map((e,i)=>React.createElement("div",{key:i,className:"fi",style:{marginBottom:10,position:"relative"}},
           React.createElement("div",{style:{position:"absolute",left:-22,top:5,width:10,height:10,borderRadius:"50%",background:e.c,border:"2px solid #09090B",zIndex:1}}),
-          React.createElement("div",{style:{background:"#111",borderRadius:8,padding:"10px 14px",border:"1px solid "+e.c+"18"}},
+          React.createElement("div",{style:{background:"#FFF",borderRadius:8,padding:"10px 14px",border:"1px solid "+e.c+"18"}},
             React.createElement("span",{style:{color:e.c,fontWeight:700,fontSize:13,marginRight:10}},e.dt),
-            React.createElement("span",{style:{color:"#CCC",fontSize:13}},e.e)
+            React.createElement("span",{style:{color:"#333",fontSize:13}},e.e)
           )
         ))
       )
     ),
 
     // FOOTER
-    React.createElement("footer",{style:{marginTop:40,padding:"20px 0",borderTop:"1px solid #151515",textAlign:"center",color:"#333",fontSize:10,lineHeight:1.8}},
-      React.createElement("strong",{style:{color:"#666"}},"Global Polycrisis Cascade Tracker v2.0"),React.createElement("br"),
+    React.createElement("footer",{style:{marginTop:40,padding:"20px 0",borderTop:"1px solid #E0E0E0",textAlign:"center",color:"#555",fontSize:10,lineHeight:1.8}},
+      React.createElement("strong",{style:{color:"#777"}},"Global Polycrisis Cascade Tracker v2.0"),React.createElement("br"),
       "Research: Triparna de Vreede, Ph.D. \u2022 University of South Florida, Muma College of Business",React.createElement("br"),
       "15 chains \u2022 150 layers \u2022 "+LINKS.length+" connections \u2022 March 24, 2026 20:00 EST"
     )
