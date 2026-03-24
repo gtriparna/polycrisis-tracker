@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Polycrisis Cascade Tracker v2.3 — March 24, 2026</title>
-<meta name="description" content="15 crisis chains traced 10 layers deep. Updated March 24, 2026 — Day 25. Sulfur cascade discovered. Mine clearance: 4-6 months minimum. Food shock locked in.">
+<title>Global Polycrisis Cascade Tracker v2.4 — March 24, 2026</title>
+<meta name="description" content="15 crisis chains traced 10 layers deep. Updated March 24, 2026 — Day 25. Now includes household action plan.">
 <meta property="og:title" content="Global Polycrisis Cascade Tracker — 15 Chains, 150 Layers, 31 Connections">
-<meta property="og:description" content="How fifteen simultaneous crises interact and amplify each other. Day 25: Sulfur cascade, mines in Hormuz, food shock being coded into the ground. Updated March 24, 2026.">
+<meta property="og:description" content="How fifteen simultaneous crises interact and amplify each other. Includes practical household action plan. Updated March 24, 2026.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚠️</text></svg>">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -105,11 +105,26 @@ return React.createElement("div",null,
           )
         })
       ),
-      // Insight box
-      React.createElement("div",{style:{marginTop:24,padding:20,background:"#FFF8F8",borderRadius:10,border:"1px solid #DC262633"}},
-        React.createElement("h3",{style:{color:"#DC2626",fontSize:14,margin:"0 0 6px"}},"Why 15 Chains, Not 5"),
-        React.createElement("p",{style:{color:"#444",fontSize:13,lineHeight:1.7,margin:0}},
-          "The original framework tracked five domains. Deep research revealed ten more: water infrastructure millions depend on for survival, insurance markets that make trade possible, cyber warfare targeting hospitals, a pandemic virus spreading while the CDC is gutted, a labor force that vanished, federal data disappearing, climate accelerating while monitors go dark, two chokepoints closed simultaneously, a hollowed government, and a society losing shared reality. Each crisis consumes the resources that would buffer against the others. That's the polycrisis."
+      // What It Means section
+      React.createElement("div",{style:{marginTop:24,padding:24,background:"#FFFBF0",borderRadius:12,border:"1px solid #D9770633"}},
+        React.createElement("h3",{style:{color:"#B45309",fontSize:16,margin:"0 0 4px",fontWeight:700}},"\u26A0\uFE0F What This Means For Your Family"),
+        React.createElement("p",{style:{color:"#666",fontSize:12,margin:"0 0 16px",lineHeight:1.5}},"Based on verified guidance from FEMA, USDA, Vanguard, Schwab, Red Cross, and agricultural economists. Not financial advice \u2014 practical preparation."),
+        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12}},
+          [
+            {icon:"\uD83D\uDED2",title:"Food: Act Before Q3",items:"Grocery prices rising 4.5\u20136.5%+ by fall. Corn-fed products (meat, dairy, eggs) hit hardest. Build a 2\u20134 week rotating pantry of staples at current prices. Shift 1\u20132 meals/week to plant proteins. Buy store brands (20\u201325% cheaper). This is price-averaging, not hoarding."},
+            {icon:"\u26FD",title:"Energy: Budget $3.50\u2013$4.50/gal",items:"Gas up $1.03 in 25 days. Goldman projects $110/barrel through April. Slow down \u2014 55 vs 65 mph saves 6\u20138 mpg. Combine errands. Keep half-tank minimum. In deregulated states: lock in fixed energy rates NOW before winter pricing. Weatherize for $20\u2013100 (saves 20% on heating)."},
+            {icon:"\uD83D\uDCB0",title:"Money: Cash + Reduce Debt",items:"Build 3\u20136 month emergency fund (6\u201312 if self-employed). Move savings to HYSA earning 4\u20135% APY \u2014 NOT the 0.39% national average. Pay down credit cards at 24.2% first. Consider I-bonds (4.03% rate, inflation-protected). Do NOT panic-sell investments \u2014 missing 10 best market days cuts returns in half."},
+            {icon:"\uD83C\uDFE0",title:"Insurance: Before May 1",items:"Buy flood insurance NOW \u2014 30-day waiting period means May 1 deadline for June 1 hurricane season. Standard policies do NOT cover floods. Review dwelling coverage: confirm full replacement cost, not market value. Get 3 quotes through independent agent. FL premiums averaging $8,292 \u2014 shop before next rate cycle."},
+            {icon:"\uD83D\uDEE1\uFE0F",title:"Emergency: Plan for 14 Days",items:"FEMA has lost 2,000+ employees. NWS forecast offices understaffed. Do not assume 72-hour federal response. Store 1 gallon water/person/day for 14 days. Maintain 30-day medication supply. Digitize critical documents. Download FEMA + Red Cross apps. Establish family communication plan with out-of-area contact."},
+            {icon:"\uD83C\uDFAF",title:"Don\u2019t Do This",items:"Do NOT sell investments based on headlines. Do NOT cash out retirement accounts (40% lost to taxes/penalties). Do NOT stop 529 contributions \u2014 you're buying at a discount. Do NOT take on new high-interest debt. Apply the 72-hour rule: no major financial decisions when emotions are high. The biggest losses come from panic, not from markets."}
+          ].map(function(item,i){return React.createElement("div",{key:i,style:{background:"#FFF",borderRadius:8,padding:"14px 16px",border:"1px solid #E8E0D0"}},
+            React.createElement("div",{style:{fontSize:14,fontWeight:700,color:"#92400E",marginBottom:6}},item.icon+" "+item.title),
+            React.createElement("p",{style:{fontSize:12,color:"#555",lineHeight:1.6,margin:0}},item.items)
+          )})
+        ),
+        React.createElement("div",{style:{marginTop:16,padding:"12px 16px",background:"#FFF",borderRadius:8,border:"1px solid #D9770633",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:10}},
+          React.createElement("span",{style:{fontSize:13,color:"#92400E",fontWeight:600}},"\uD83D\uDCD6 Want the full plan with sources and detailed guidance?"),
+          React.createElement("a",{href:"action-plan.html",target:"_blank",style:{fontSize:12,fontWeight:700,color:"#FFF",background:"#B45309",padding:"8px 16px",borderRadius:6,textDecoration:"none"}},"Read the Full Household Action Plan \u2192")
         )
       )
     ),
